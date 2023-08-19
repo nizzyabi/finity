@@ -4,12 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import { usePathname } from "next/navigation"
-
+import { FreeCounter } from "./free-counter";
 import { cn } from "@/lib/utils";
-import { Code, ImageIcon, LayoutDashboard, MessageSquare, Music, Settings, VideoIcon } from "lucide-react";
+import { Code, ImageIcon, LayoutDashboard, MessageSquare, Monitor, Music, Settings, VideoIcon } from "lucide-react";
 import React from "react";
+import { Badge } from "./ui/badge";
 
 const montserrat = Montserrat({ weight: "600", subsets: ["latin"]})
+
 
 const routes = [
     {
@@ -19,7 +21,7 @@ const routes = [
       color: "text-sky-500"
     },
     {
-      label: 'Chat',
+      label: 'Finity-GPT',
       icon: MessageSquare,
       href: '/conversation',
       color: "text-violet-500",
@@ -31,13 +33,13 @@ const routes = [
       href: '/image',
     },
     {
-      label: 'Video Generation',
+      label: 'Video Generation (Beta)',
       icon: VideoIcon,
       color: "text-orange-700",
       href: '/video',
     },
     {
-      label: 'Music Generation',
+      label: 'Music Generation (Beta)',
       icon: Music,
       color: "text-emerald-500",
       href: '/music',
@@ -52,13 +54,21 @@ const routes = [
       label: 'Settings',
       icon: Settings,
       href: '/settings',
-    },
+    }
   ];
 
-const Sidebar = () => {
+  interface SidebarProps {
+    apiLimitCount: number;
+    isPro: boolean;
+  };
+
+const Sidebar = ({
+  apiLimitCount = 0,
+  isPro = false,
+}: SidebarProps) => {
   const pathname = usePathname()
     return (
-        <div className="space-y-4 py-4 flex flex-col h-full bg-[#0b1628] text-white">
+        <div className="space-y-4 py-4 flex flex-col h-full bg-[#222645] text-white">
             <div className="px-3 py-2 flex-1">
                 <Link href='/dashboard' className="flex items-center pl-3 mb-14">
                     <div className="relative w-10 h-10 mr-4">
@@ -68,9 +78,17 @@ const Sidebar = () => {
                         src="/yo.png"
                         />
                     </div>
-                    <h1 className={cn("text-2xl font-bold", montserrat.className)}>
-                        Finity
-                    </h1>
+                    <div>
+                      {isPro ? (
+                        <h1 className={cn("text-2xl font-bold", montserrat.className)}>
+                          FinityAI <Badge variant="premium" className="flex justify-center">pro</Badge>
+                        </h1>
+                      ) : (
+                        <h1 className={cn("text-2xl font-bold", montserrat.className)}>
+                          Finity AI
+                        </h1>
+                      )}
+                    </div>
                 </Link>
                 <div className="space-y-1">
                     {routes.map((route) => (
@@ -89,6 +107,10 @@ const Sidebar = () => {
                     ))}
                 </div>
             </div>
+            <FreeCounter 
+              isPro={isPro}
+              apiLimitCount={apiLimitCount}
+            />
         </div>
     )
 }

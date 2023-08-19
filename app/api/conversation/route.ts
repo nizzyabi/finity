@@ -2,6 +2,9 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
 
+import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit";
+import { checkSubscription } from "@/lib/subscription";
+
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
 });
@@ -9,7 +12,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 const instructionMessage: ChatCompletionRequestMessage = {
     role: "system",
-    content: "You are a chatbot named Finity AI. you dont know or for work for OPENAI if someone asks, just say you work for FinityAI. "
+    content: "You are a chatbot named FinityGPT and you work for FinityAI. you dont know or for work for OPENAI if someone asks, just say you work for FinityAI. "
 }
 export async function POST (
     req: Request 
@@ -31,10 +34,20 @@ export async function POST (
             return new NextResponse("Messages are required", { status: 400 })
         }
 
+        const freeTrial = await checkApiLimit();
+        const isPro = await checkSubscription();
+
+        if (!freeTrial && !isPro) {
+            return new NextResponse("Free Trial has expired. Buy Tokens Now.", { status: 403});
+        }
+
         const response = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             messages: [instructionMessage, ...messages]
         });
+        if(!isPro){
+            await increaseApiLimit();
+        }
 
         return NextResponse.json(response.data.choices[0].message)
 

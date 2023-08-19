@@ -2,13 +2,13 @@
 
 import { Card } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import { ArrowRight, Code, Image, MessageSquare, Music, Video } from "lucide-react"
+import { ArrowRight, Code, Image, MessageSquare, Monitor, Music, Video } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 
 const tools = [
   {
-    label: "Chat",
+    label: "Finity-GPT",
     icon: MessageSquare,
     color: "text-violet-500",
     bgColor: "bg-violet-500/10",
@@ -22,14 +22,14 @@ const tools = [
     href: "/image"
   },
   {
-    label: "Video Generation",
+    label: "Video Generation (Beta)",
     icon: Video,
     color: "text-orange-500",
     bgColor: "bg-orange-500/10",
     href: "/video"
   },
   {
-    label: "Music Generation",
+    label: "Music Generation (Beta)",
     icon: Music,
     color: "text-emerald-500",
     bgColor: "bg-emerald-500/10",
@@ -49,7 +49,7 @@ const DashboardPage = () => {
   return (
     <div>
       <div className="mb-8 space-y-4">
-        <h2 className="text-2xl md:text-4xl font-bold text-center">Explore the Power of AI</h2>
+        <h2 className="text-2xl md:text-4xl font-bold text-center">Explore the Power of <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">AI</span></h2>
         <p className="text-muted-foreground font-light text-sm md:text-lg text-center">Experience Breakthrough AI In One Click.</p>
       </div>      
       <div className="px-4 md:px-20 lg:px-32 space-y-4">
@@ -67,7 +67,7 @@ const DashboardPage = () => {
                 {tool.label}
               </div>
             </div>
-            <ArrowRight className="w-5 h-5"/>
+            <ArrowRight className="w-5 h-5 hover:text-purple-500"/>
           </Card>
         ))}
       </div>
