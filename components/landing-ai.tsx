@@ -59,7 +59,6 @@ const tools = [
                 <CardTitle className="flex items-center gap-x-2">
                   <div>
                     <p className="text-xxl pb-3">{item.label}</p>
-                    <img src={item.image} alt='yes'/>
                   </div>
                 </CardTitle>
                 <CardContent className="pt-4 px-0">
