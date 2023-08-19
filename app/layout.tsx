@@ -29,9 +29,6 @@ export default async function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <head>
-        <link rel="icon" href={imageLoader({ src: logoIcon.src })} type="image/png" />
-        </head>
         <CrispProvider />
         <body className={font.className}>
           <ToasterProvider />
