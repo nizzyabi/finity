@@ -1,6 +1,6 @@
 "use client"
 
-import { Code, Image, MessageSquare, Music, Video } from "lucide-react"
+import { Code, MessageSquare, Music, Video } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import "../public/ai.webp";
 import "../public/bot.png"
@@ -9,7 +9,7 @@ import "../public/video.png"
 import Link from "next/link";
 import { useAuth } from "@clerk/nextjs";
 import { Button } from "./ui/button";
-
+import Image from "next/image";
 const tools = [
     {
       label: "Finity-GPT",
